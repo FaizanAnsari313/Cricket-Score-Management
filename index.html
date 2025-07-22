@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cricket Score Record Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Cricket Score Record Manager</h1>
+    <div class="keypad" role="region" aria-label="Score input keypad">
+      <button type="button" data-run="1">1</button>
+      <button type="button" data-run="2">2</button>
+      <button type="button" data-run="3">3</button>
+      <button type="button" data-run="4">4</button>
+      <button type="button" data-run="6">6</button>
+      <button type="button" data-run="0">0</button>
+      <button type="button" class="extra" data-extra="wide">Wide Ball +1</button>
+      <button type="button" class="extra" data-extra="no-ball">No Ball +1</button>
+      <button type="button" class="clear">Clear / Reset</button>
+    </div>
+
+    <table aria-label="Ball by ball score sheet" id="scoreSheet" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Ball</th>
+          <th scope="col">Runs</th>
+          <th scope="col">Extra</th>
+          <th scope="col">Total Score</th>
+        </tr>
+      </thead>
+      <tbody id="scoreBody"></tbody>
+    </table>
+
+    <!-- Over Complete Indicator -->
+    <div id="overIndicator" class="over-indicator" role="alert" aria-live="polite"></div>
+
+    <div class="summary" id="summary"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
