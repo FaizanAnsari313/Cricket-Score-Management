@@ -1,3 +1,67 @@
+@media (max-width: 768px) {
+    .container {
+        max-width: 96vw;
+        padding: 16px 2vw;
+    }
+    .score-section {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+        font-size: 1rem;
+    }
+    h1, h2 {
+        font-size: 1.3rem;
+    }
+    .button-section {
+        flex-direction: column;
+        gap: 7px;
+        margin-bottom: 14px;
+    }
+    .button-section button {
+        flex: 1 1 100%;
+        font-size: 1.03rem;
+        padding: 10px 0;
+    }
+    .modal-content {
+        width: 98vw;
+        min-width: unset;
+        max-width: 370px;
+        margin: 11vh auto;
+        padding: 18px 8px 12px 8px;
+        font-size: 1rem;
+    }
+    /* Shrink table and enhance tap targets */
+    #scoreSheet, #scoreSheet th, #scoreSheet td {
+        font-size: 0.94rem;
+        padding: 4px 2px;
+    }
+    .run-buttons button {
+        font-size: 1.06rem;
+        padding: 9px 0;
+        width: 40%;
+        margin: 2px 5%;
+    }
+}
+@media (max-width: 480px) {
+    .container {
+        padding: 8px 2px;
+        min-width: unset;
+        box-shadow: none;
+    }
+    h1, h2 {
+        font-size: 1.1rem;
+    }
+    .score-section {
+        font-size: 0.99rem;
+    }
+    .modal-content {
+        max-width: 98vw;
+        margin: 12vw auto;
+    }
+}
+
+
+
 body {
     background: #f8f9fa;
     font-family: Arial, sans-serif;
