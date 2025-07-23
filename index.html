@@ -1,42 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Cricket Score Record Manager</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score Sheet</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Cricket Score Record Manager</h1>
-    <div class="keypad" role="region" aria-label="Score input keypad">
-      <button type="button" data-run="1">1</button>
-      <button type="button" data-run="2">2</button>
-      <button type="button" data-run="3">3</button>
-      <button type="button" data-run="4">4</button>
-      <button type="button" data-run="6">6</button>
-      <button type="button" data-run="0">0</button>
-      <button type="button" class="extra" data-extra="wide">Wide Ball +1</button>
-      <button type="button" class="extra" data-extra="no-ball">No Ball +1</button>
-      <button type="button" class="clear">Clear / Reset</button>
+    <div class="container">
+        <h1>Cricket Score Sheet</h1>
+        <div class="score-section">
+            <div>
+                <strong>Total Score:</strong> <span id="totalScore">0</span>
+            </div>
+            <div>
+                <strong>Wickets:</strong> <span id="wickets">0</span>
+            </div>
+            <div>
+                <strong>Over:</strong> <span id="over">0</span>.<span id="balls">0</span>
+            </div>
+        </div>
+        <div class="indicator-section">
+            <span id="noBallIndicator"></span>
+        </div>
+        <div class="button-section">
+            <button onclick="addScore(1)">1 Run</button>
+            <button onclick="addScore(2)">2 Runs</button>
+            <button onclick="addScore(3)">3 Runs</button>
+            <button onclick="addScore(4)">4 Runs</button>
+            <button onclick="addScore(6)">6 Runs</button>
+            <button onclick="openNoBallModal()">No Ball</button>
+            <button onclick="wideBall()">Wide Ball</button>
+            <button onclick="dotBall()">Dot Ball</button>
+            <button onclick="openDeadBallModal()">Dead Ball</button>
+            <button onclick="batsmanOut()">OUT</button>
+        </div>
+        <div id="overCompletedMsg" class="over-message"></div>
+
+        <h2>Score Sheet</h2>
+        <table id="scoreSheet">
+            <thead>
+                <tr>
+                    <th>Ball</th>
+                    <th>Run</th>
+                    <th>Extra</th>
+                    <th>Wicket</th>
+                </tr>
+            </thead>
+            <tbody id="sheetBody">
+            </tbody>
+        </table>
     </div>
 
-    <table aria-label="Ball by ball score sheet" id="scoreSheet" role="table">
-      <thead>
-        <tr>
-          <th scope="col">Ball</th>
-          <th scope="col">Runs</th>
-          <th scope="col">Extra</th>
-          <th scope="col">Total Score</th>
-        </tr>
-      </thead>
-      <tbody id="scoreBody"></tbody>
-    </table>
+    <!-- No Ball Modal -->
+    <div class="modal" id="noBallModal">
+        <div class="modal-content">
+            <span class="modal-title">No Ball</span>
+            <p>Select runs hit by batsman, or OUT:</p>
+            <div class="run-buttons">
+                <button onclick="submitNoBall(0)">0</button>
+                <button onclick="submitNoBall(1)">1</button>
+                <button onclick="submitNoBall(2)">2</button>
+                <button onclick="submitNoBall(3)">3</button>
+                <button onclick="submitNoBall(4)">4</button>
+                <button onclick="submitNoBall(6)">6</button>
+                <button class="out-btn" onclick="submitNoBallOutDirect()">OUT</button>
+            </div>
+            <div id="noBallOut" style="display:none; margin-top:12px;">
+                <p>Was the batsman out on this No Ball?</p>
+                <button onclick="submitNoBallOut(true)">Yes</button>
+                <button onclick="submitNoBallOut(false)">No</button>
+            </div>
+            <button class="close-btn" onclick="closeNoBallModal()">Cancel</button>
+        </div>
+    </div>
 
-    <!-- Over Complete Indicator -->
-    <div id="overIndicator" class="over-indicator" role="alert" aria-live="polite"></div>
+    <!-- Dead Ball Modal -->
+    <div class="modal" id="deadBallModal">
+        <div class="modal-content">
+            <span class="modal-title">Dead Ball</span>
+            <p>Select runs hit by batsman:</p>
+            <div class="run-buttons">
+                <button onclick="submitDeadBall(0)">0</button>
+                <button onclick="submitDeadBall(1)">1</button>
+                <button onclick="submitDeadBall(2)">2</button>
+                <button onclick="submitDeadBall(3)">3</button>
+                <button onclick="submitDeadBall(4)">4</button>
+                <button onclick="submitDeadBall(6)">6</button>
+            </div>
+            <button class="close-btn" onclick="closeDeadBallModal()">Cancel</button>
+        </div>
+    </div>
 
-    <div class="summary" id="summary"></div>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
