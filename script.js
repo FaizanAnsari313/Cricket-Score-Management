@@ -30,7 +30,6 @@ function addSheetEntry(run, extra, wicket, outOnThisBall=false) {
     `;
     tbody.appendChild(tr);
 }
-// --- Ball Types Logic ---
 function addScore(run) {
     totalScore += run;
     balls++;
@@ -38,20 +37,17 @@ function addScore(run) {
     checkOver();
     updateDisplay();
 }
-
 function dotBall() {
     balls++;
     addSheetEntry(0, '', '', false);
     checkOver();
     updateDisplay();
 }
-
 function wideBall() {
     totalScore += 1;
-    addSheetEntry('', 'Wide', '', false); // ball is NOT counted
+    addSheetEntry('', 'Wide', '', false);
     updateDisplay();
 }
-
 function batsmanOut() {
     balls++;
     wickets++;
@@ -60,7 +56,7 @@ function batsmanOut() {
     updateDisplay();
 }
 
-// --- Modal Logic for No Ball ---
+// ---- Modal Logic for No Ball ----
 let noBallRun = null;
 function openNoBallModal() {
   document.getElementById('noBallModal').style.display = 'block';
@@ -72,26 +68,20 @@ function closeNoBallModal() {
   document.getElementById('noBallOut').style.display = 'none';
   noBallRun = null;
 }
-
-// From run buttons
 function submitNoBall(runs) {
   noBallRun = runs;
   document.getElementById('noBallOut').style.display = 'block';
 }
-
-// From OUT button directly
 function submitNoBallOutDirect() {
-  totalScore += 1; // No ball only, no run by batsman
+  totalScore += 1;
   showNoBallIndicator();
   addSheetEntry('0', 'No Ball', '', true);
   closeNoBallModal();
   updateDisplay();
 }
-
-// OUT/NOT OUT after run selection
 function submitNoBallOut(isOut) {
   const runVal = parseInt(noBallRun);
-  totalScore += 1 + runVal; // 1 for no ball, plus scored runs if any
+  totalScore += 1 + runVal;
   showNoBallIndicator();
   addSheetEntry(
     `${runVal}`,
@@ -99,12 +89,54 @@ function submitNoBallOut(isOut) {
     '',
     isOut
   );
-  // Ball does not count, wicket does not increment
   closeNoBallModal();
   updateDisplay();
 }
 
 // ---- Modal Logic for Dead Ball ----
+
+// --- Indicator for No Ball ---
+function showNoBallIndicator(){
+  const indi = document.getElementById('noBallIndicator');
+  indi.textContent = "No Ball!";
+  indi.style.display = "inline-block";
+  setTimeout(()=>{ indi.textContent = ""; }, 1500);
+}
+
+function checkOver() {
+  if (balls >= 6) {
+    over += 1;
+    balls = 0;
+    showOverCompletedMsg();
+  }
+}
+/* Clear button logic: resets all */
+function clearSheet() {
+  if(confirm("Are you sure you want to clear the entire sheet and reset the score?")) {
+    totalScore = 0;
+    wickets = 0;
+        over = 0;
+        balls = 0;
+        ballNumber = 1;
+        document.getElementById('sheetBody').innerHTML = '';
+        document.getElementById('overCompletedMsg').textContent = '';
+        updateDisplay();
+      }
+    }
+
+// ---- Modal close on click outside ----
+window.onclick = function(event) {
+  const noBallModal = document.getElementById('noBallModal');
+  const deadBallModal = document.getElementById('deadBallModal');
+  if (event.target === noBallModal) {
+    closeNoBallModal();
+  }
+  if (event.target === deadBallModal) {
+    closeDeadBallModal();
+  }
+}
+window.onload = updateDisplay;
+
 function openDeadBallModal() {
   document.getElementById('deadBallModal').style.display = 'block';
 }
@@ -118,37 +150,4 @@ function submitDeadBall(runs) {
   );
   closeDeadBallModal();
   updateDisplay();
-  // On dead ball, run is added, but ball is NOT counted
 }
-
-// --- Indicator for No Ball ---
-function showNoBallIndicator(){
-    const indi = document.getElementById('noBallIndicator');
-    indi.textContent = "No Ball!";
-    indi.style.display = "inline-block";
-    setTimeout(()=>{ indi.textContent = ""; }, 1500);
-}
-
-// --- Over Check ---
-function checkOver() {
-    if (balls >= 6) {
-        over += 1;
-        balls = 0;
-        showOverCompletedMsg();
-    }
-}
-
-// ---- Modal close on click outside ----
-window.onclick = function(event) {
-  const noBallModal = document.getElementById('noBallModal');
-  const deadBallModal = document.getElementById('deadBallModal');
-  if (event.target === noBallModal) {
-    closeNoBallModal();
-  }
-  if (event.target === deadBallModal) {
-    closeDeadBallModal();
-  }
-}
-
-// For page refresh
-window.onload = updateDisplay;
